@@ -1,0 +1,13 @@
+.battle-menu button{
+  display: block;
+  border: 3px solid black;
+  width: 120%;
+  color: white;
+  font-size: 17px;
+  background-color: #4F5226;
+}
+.battle-menu {
+  flex-grow: 1;
+  align-self: flex-end;
+
+}

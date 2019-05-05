@@ -4,11 +4,12 @@ import BattleContainer from './BattleContainer';
 import HudContainer from './HudContainer'
 import Home from '../components/Home'
 import Hud from '../components/Hud';
+import '../style/game.css'
 
 var api = "http://localhost:3000/"
 class GameContainer extends Component {
   state = {
-    page: "home",
+    page: "battle",
     monsters: [],
     character: {},
     fullCharacterHealth: 0,
@@ -16,8 +17,16 @@ class GameContainer extends Component {
     currentMonster: {},
     currentMonsterHealth: 0,
     weaponInventory: [],
-    equippedWeapon: {base_damage: 1, name: "Sword"},
+    equippedWeapon: {base_damage: 6, rand_damage: 10, item_element: "earth", bonus_to_hit: 2, type: "melee", name: "Battleaxe", item_desc: "A simple double bladed axe."},
     equippedArmor: {name: "Steel Plate", earth_armor: -10}
+  }
+
+  player_damage_formula = () => {
+
+  }
+
+  monster_damage_formula = () => {
+
   }
 
   attack = () => {
@@ -105,7 +114,7 @@ class GameContainer extends Component {
   displayPage = () => {
     if (this.state.page === "battle") {
       return (
-        <div className="game-container">
+        <div className="battle-container">
           <BattleContainer monster={this.state.currentMonster} character={this.state.character} attack={this.attack} goHome={this.goHome}/>
 
         </div>
@@ -121,14 +130,19 @@ class GameContainer extends Component {
   }
   render() {
     return (
+      <div className={`game-container ${this.state.page}`}>
       <>
+      <div className="content-container">
       {this.displayPage()}
+      </div>
       <HudContainer monster={this.state.currentMonster} character={this.state.character} currentMonsterHealth={this.state.currentMonsterHealth} characterHealth={this.state.characterHealth}>
-      {this.state.page !== "battle" ? <Hud character={this.state.character} health={this.state.characterHealth}/> : <>
-      <Hud character={this.state.character} health={this.state.characterHealth}/> <Hud character={this.state.currentMonster} health={this.state.currentMonsterHealth}/>
+      {this.state.page !== "battle" ? <Hud character={this.state.character} health={this.state.characterHealth} element_class={"player"}/> : <>
+      <Hud character={this.state.character} health={this.state.characterHealth} element_class={"player"}/> <Hud character={this.state.currentMonster} health={this.state.currentMonsterHealth} element_class={"enemy"}/>
       </>}
       </HudContainer>
       </>
+
+      </div>
     )
 
 

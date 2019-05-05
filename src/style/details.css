@@ -1,0 +1,64 @@
+.details {
+  border: 1px solid black;
+  background-color: white;
+}
+
+.group {
+  display:flex;
+}
+
+.group-left {
+  display:flex;
+  padding-left: 10px;
+}
+
+.right-list {
+  padding-left: 0;
+}
+
+.top-container {
+  display: flex;
+}
+
+.stats {
+  display:flex;
+}
+
+.monster-name {
+  color: #7E373A;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+
+span {
+  color: #425B9D;
+  font-weight: bold;
+}
+
+
+
+ul {
+  margin: 0;
+  padding-right: 10px;
+  padding-left: 10px;
+  list-style-type: none;
+
+}
+
+span.black {
+  color:black;
+}
+
+.header {
+  padding-top: 10px;
+  color: #425B9D;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: black;
+}
+
+.description {
+  color: #425B9D;
+  font-weight: bold;
+}

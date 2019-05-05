@@ -1,0 +1,22 @@
+.game-container {
+  height: 750px;
+  width: 1000px;
+  border: 1px solid yellow;
+  margin: auto;
+  margin-top: 10px;
+
+  background-size:100% 100%;
+  /* background-color: #EDD4AF; */
+}
+
+.home {
+  background-image: url('../images/home_screen_with_title.png');
+}
+
+.battle {
+  background-image: url('../images/forest_background.png');
+}
+
+.content-container {
+  height: 590px;
+}

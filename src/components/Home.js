@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
+import '../style/home.css'
 
 class Home extends Component {
 
   render() {
     return (
-      <div>
-      <div>Fantasy Game</div>
-      <div>Game Image</div>
-      <button onClick={this.props.startBattle}>Battle!</button>
-      <button onClick={this.props.rest}>Rest</button>
-      <button>Shop</button>
-      <button>Stat Trainers</button>
-      <button>Log Out</button>
-
+      <div className="home-container">
+      <div className="title">
+      <div></div>
+      <div></div>
+      </div>
+      <div className="button-group">
+      <button className="glass" onClick={this.props.startBattle}>Battle!</button>
+      <button className="glass" onClick={this.props.rest}>Rest</button>
+      <button className="glass" >Shop</button>
+      <button className="glass" >Stat Trainers</button>
+      <button className="glass" >Log Out</button>
+      </div>
       </div>
     );
   }
