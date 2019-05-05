@@ -11,18 +11,18 @@ class Hud extends Component {
           <div className="health">{this.props.health}</div>
           <div className="mana">{this.props.character.mp}</div>
         </div>
-        <div className={`circle ${this.props.element_class}`}>
-          <img src={this.props.character.image} height="140" alt="" />
+        <div onMouseEnter={this.props.showDetails} onMouseLeave={this.props.hideDetails} className={`circle ${this.props.element_class}`}>
+          <img src={this.props.character.extra_data} height="140" alt="" />
         </div>
         </>
       :
         <>
-        <div className={`circle ${this.props.element_class}`}>
+        <div onMouseEnter={this.props.showDetails} onMouseLeave={this.props.hideDetails} className={`circle ${this.props.element_class}`}>
           <img src={require("../images/player_icon.png")} width="120"alt="" />
         </div>
 
         <div className={`character-icon-name ${this.props.element_class}`}>
-          Player
+        {this.props.character.name}
           <div className="health">{this.props.health}</div>
           <div className="mana">100</div>
 

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-
+import MonsterDetails from '../components/MonsterDetails';
 class Monster extends Component {
 
   render() {
     return (
       <div>
-      {this.props.monster.name} Image
       </div>
     );
   }

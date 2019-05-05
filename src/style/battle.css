@@ -1,4 +1,15 @@
 .battle-container {
   display: flex;
+  justify-content: center;
+  height: 100%;
+}
 
+.place-holder {
+  border: 1px solid transparent;
+  width: 335px;
+  height: 540px;
+  padding: 7px;
+  padding-top: 15px;
+  margin: 50px;
+  margin-top: 20px;
 }

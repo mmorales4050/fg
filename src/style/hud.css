@@ -1,6 +1,7 @@
 .hud-container {
   display: flex;
   justify-content: space-between;
+  height: 156px;
 }
 
 .character-container {
@@ -8,6 +9,11 @@
   display: flex;
   justify-content: space-between;
 
+}
+
+.character-icon-name {
+  font-weight: bold;
+  text-align: center;
 }
 
 .character-icon-container.enemy {
@@ -30,7 +36,6 @@
   height: 20%;
   width: 100%;
   background: #2D2F00;
-
 
 }
 

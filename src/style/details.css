@@ -1,20 +1,42 @@
 .details {
   border: 1px solid black;
   background-color: white;
+  width: 335px;
+  height: 540px;
+  padding: 7px;
+  padding-top: 15px;
+  margin: 50px;
+  margin-top: 20px;
 }
 
+.info {
+  width: 134px;
+}
+
+.def {
+  width: 158px;
+}
+
+.info-left {
+  width: 74px;
+}
+
+
+.defense-mod {
+  text-align: right;
+  float: left;
+  padding-left: 0px;
+  padding-right: 0px;
+  width: 70px;
+}
 .group {
   display:flex;
 }
 
-.group-left {
-  display:flex;
-  padding-left: 10px;
+li {
+  font-weight: bold;
 }
 
-.right-list {
-  padding-left: 0;
-}
 
 .top-container {
   display: flex;
@@ -26,10 +48,22 @@
 
 .monster-name {
   color: #7E373A;
+  font-size: 20px;
   font-weight: bold;
   padding-left: 10px;
   padding-bottom: 5px;
 }
+
+
+
+.character-name {
+  color: #425B9D;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+
 
 span {
   color: #425B9D;
@@ -48,14 +82,40 @@ ul {
 
 span.black {
   color:black;
+
+}
+
+span.percent {
+  color:black;
+  font-weight: normal;
 }
 
 .header {
   padding-top: 10px;
   color: #425B9D;
   font-weight: bold;
-  text-decoration: underline;
+  border-bottom: 1px solid black;
   text-decoration-color: black;
+}
+
+.attr {
+  padding-right: 30px;
+}
+
+.attr-list {
+  padding-right: 15px!important;
+}
+
+.right-list {
+  padding-left: 10px;
+  padding-right: 0px;
+}
+
+.left-list {
+  text-align: right;
+  width: 40px;
+  padding-left: 0px;
+  padding-right: 20px;
 }
 
 .description {

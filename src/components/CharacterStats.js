@@ -6,10 +6,11 @@ class CharacterStats extends Component {
   render() {
     return (
       <>
+
       <div className="stats">
 
       <ul>
-      <li className="header">ATTRIBUTES</li>
+      <li className="header attr">ATTRIBUTES</li>
       <li></li>
 
       </ul>
@@ -21,7 +22,7 @@ class CharacterStats extends Component {
       </div>
       <div className="group">
       <div className="group">
-      <ul>
+      <ul className="right-list">
       <li>Strength</li>
       <li>Dexterity</li>
       <li>Intellect</li>
@@ -29,7 +30,7 @@ class CharacterStats extends Component {
       <li>Charisma</li>
       <li>Luck</li>
       </ul>
-      <ul>
+      <ul className="left-list attr-list">
       <li><span>{this.props.character.stre}</span></li>
       <li><span>{this.props.character.dext}</span></li>
       <li><span>{this.props.character.inte}</span></li>
@@ -38,6 +39,7 @@ class CharacterStats extends Component {
       <li><span>{this.props.character.luck}</span></li>
       </ul>
       </div>
+
       <div className="group">
       <ul className="right-list">
       <li>Fire</li>
@@ -49,15 +51,15 @@ class CharacterStats extends Component {
       <li>Light</li>
       <li>Darkness</li>
       </ul>
-      <ul>
-      <li><span>{this.props.character.armor_fire + 100}</span> %</li>
-      <li><span>{this.props.character.armor_water + 100}</span> %</li>
-      <li><span>{this.props.character.armor_wind + 100}</span> %</li>
-      <li><span>{this.props.character.armor_ice + 100}</span> %</li>
-      <li><span>{this.props.character.armor_earth + 100}</span> %</li>
-      <li><span>{this.props.character.armor_energy + 100}</span> %</li>
-      <li><span>{this.props.character.armor_light + 100}</span> %</li>
-      <li><span>{this.props.character.armor_darkness + 100}</span> %</li>
+      <ul className="defense-mod">
+      <li><span>{this.props.character.armor_fire + 100}</span> <span className="percent">%</span></li>
+      <li><span>{this.props.character.armor_water + 100}</span> <span className="percent">%</span></li>
+      <li><span>{this.props.character.armor_wind + 100}</span> <span className="percent">%</span></li>
+      <li><span>{this.props.character.armor_ice + 100}</span> <span className="percent">%</span></li>
+      <li><span>{this.props.character.armor_earth + 100}</span> <span className="percent">%</span></li>
+      <li><span>{this.props.character.armor_energy + 100}</span> <span className="percent">%</span></li>
+      <li><span>{this.props.character.armor_light + 100}</span> <span className="percent">%</span></li>
+      <li><span>{this.props.character.armor_darkness + 100}</span> <span className="percent">%</span></li>
       </ul>
       </div>
       </div>

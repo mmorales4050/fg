@@ -1,13 +1,25 @@
 .battle-menu button{
   display: block;
-  border: 3px solid black;
-  width: 120%;
+  border: 1px solid black;
+  width: 100%;
   color: white;
-  font-size: 17px;
+  font-weight: bold;
+  height: 30px;
+  text-shadow: 2px 2px black;
+  font-size: 20px;
   background-color: #4F5226;
+  background-image: linear-gradient(#8a895b,#464a0f);
 }
+
+.attack-button {
+  height: 50px!important;
+  font-size: 30px
+  !important;
+}
+
 .battle-menu {
+  width: 160px;
   flex-grow: 1;
   align-self: flex-end;
-
+  border: 3px solid black;
 }

@@ -14,7 +14,7 @@ class MonsterDetails extends Component {
           <li>Exp </li>
           <li>Gold </li>
           </ul>
-          <ul>
+          <ul className="info-left">
           <li><span>{this.props.monster.level}</span></li>
           <li><span>{this.props.monster.exp}</span></li>
           <li><span>{this.props.monster.gold}</span></li>

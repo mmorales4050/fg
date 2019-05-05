@@ -18,8 +18,34 @@ class GameContainer extends Component {
     currentMonsterHealth: 0,
     weaponInventory: [],
     equippedWeapon: {base_damage: 6, rand_damage: 10, item_element: "earth", bonus_to_hit: 2, type: "melee", name: "Battleaxe", item_desc: "A simple double bladed axe."},
-    equippedArmor: {name: "Steel Plate", earth_armor: -10}
-  }
+    equippedArmor: {name: "Steel Plate", earth_armor: -10},
+    showMonsterDetails: false,
+    showPlayerDetails: false
+    }
+
+    showMonsterDetails = () => {
+      this.setState({
+        showMonsterDetails: true
+      })
+    }
+
+    hideMonsterDetails = () => {
+      this.setState({
+        showMonsterDetails: false
+      })
+    }
+
+    showPlayerDetails = () => {
+      this.setState({
+        showPlayerDetails: true
+      })
+    }
+
+    hidePlayerDetails = () => {
+      this.setState({
+        showPlayerDetails: false
+      })
+    }
 
   player_damage_formula = () => {
 
@@ -88,8 +114,10 @@ class GameContainer extends Component {
     })
     .then(() => {
       this.setState({
-        currentMonster: this.state.monsters[0],
-        currentMonsterHealth: this.state.monsters[0].hp
+        currentMonster: this.state.monsters[Math.floor(Math.random() * 63)]
+      })
+      this.setState({
+        currentMonsterHealth: this.state.currentMonster.hp
       })
     })
   }
@@ -115,7 +143,7 @@ class GameContainer extends Component {
     if (this.state.page === "battle") {
       return (
         <div className="battle-container">
-          <BattleContainer monster={this.state.currentMonster} character={this.state.character} attack={this.attack} goHome={this.goHome}/>
+          <BattleContainer monster={this.state.currentMonster} character={this.state.character} attack={this.attack} goHome={this.goHome} showMonsterDetails={this.state.showMonsterDetails} showPlayerDetails={this.state.showPlayerDetails}/>
 
         </div>
       );
@@ -137,7 +165,7 @@ class GameContainer extends Component {
       </div>
       <HudContainer monster={this.state.currentMonster} character={this.state.character} currentMonsterHealth={this.state.currentMonsterHealth} characterHealth={this.state.characterHealth}>
       {this.state.page !== "battle" ? <Hud character={this.state.character} health={this.state.characterHealth} element_class={"player"}/> : <>
-      <Hud character={this.state.character} health={this.state.characterHealth} element_class={"player"}/> <Hud character={this.state.currentMonster} health={this.state.currentMonsterHealth} element_class={"enemy"}/>
+      <Hud character={this.state.character} health={this.state.characterHealth} element_class={"player"}  showDetails={this.showPlayerDetails} hideDetails={this.hidePlayerDetails}/> <Hud character={this.state.currentMonster} health={this.state.currentMonsterHealth} element_class={"enemy"} showDetails={this.showMonsterDetails} hideDetails={this.hideMonsterDetails}/>
       </>}
       </HudContainer>
       </>
