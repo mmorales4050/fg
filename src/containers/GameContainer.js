@@ -20,8 +20,9 @@ class GameContainer extends Component {
     currentMonster: {},
     currentMonsterHealth: 0,
     weaponInventory: [],
-    equippedWeapon: {base_damage: 6, rand_damage: 10, item_element: "earth", bonus_to_hit: 2, type: "melee", name: "Battleaxe", item_desc: "A simple double bladed axe."},
-    equippedArmor: {name: "Steel Plate", earth_armor: -10},
+    armorInventory: [],
+    equippedWeapon: {},
+    equippedArmor: {},
     showMonsterDetails: false,
     showPlayerDetails: false
     }
@@ -109,25 +110,31 @@ class GameContainer extends Component {
         fullCharacterHealth: characters[0].level * 100
       })
     })
-    // Fetch Monsters
-    fetch(api + "/monsters")
-    .then(r => r.json())
-    .then(monsters => {
-      this.setState({monsters: monsters})
-    })
     .then(() => {
-      this.setState({
-        currentMonster: this.state.monsters[Math.floor(Math.random() * 63)]
+      // Fetch Monsters
+      fetch(api + "/monsters")
+      .then(r => r.json())
+      .then(monsters => {
+        this.setState({monsters: monsters})
       })
-      this.setState({
-        currentMonsterHealth: this.state.currentMonster.hp
+      .then(() => {
+        this.setState({
+          currentMonster: this.state.monsters[Math.floor(Math.random() * 63)]
+        })
+        this.setState({
+          currentMonsterHealth: this.state.currentMonster.hp
+        })
       })
-    })
-    // Fetch Armors
-    fetch(api + "/armors")
-    .then(r => r.json())
-    .then(armors => {
-      this.setState({armors: armors})
+      .then(() => {
+        while (this.state.currentMonster.level < this.state.character.level - 5 || this.state.currentMonster.level > this.state.character.level + 5) {
+          this.setState({
+            currentMonster: this.state.monsters[Math.floor(Math.random() * 63)]
+          })
+          this.setState({
+            currentMonsterHealth: this.state.currentMonster.hp
+          })
+        }
+      })
     })
     // Fetch Weapons
     fetch(api + "/weapons")
@@ -135,6 +142,59 @@ class GameContainer extends Component {
     .then(weapons => {
       this.setState({weapons: weapons})
     })
+    .then(() => {
+      // Fetch Armors
+      fetch(api + "/armors")
+      .then(r => r.json())
+      .then(armors => {
+        this.setState({armors: armors})
+      })
+    })
+    .then(() => {
+      // Fetch Weapon Inventory
+      fetch(api +"/character_weapons")
+      .then(r => r.json())
+      .then(character_weapons => {
+        var weaponIds = []
+        character_weapons.forEach((character_weapon) => {
+          if (character_weapon.character_id === this.state.character.id) {
+            weaponIds.push(character_weapon.weapon_id)
+          }
+        })
+        console.log(weaponIds)
+        var weaponInventory = this.state.weapons.filter(weapon => {
+          return weaponIds.includes(weapon.id)
+        })
+
+        this.setState({
+          weaponInventory: weaponInventory,
+          equippedWeapon: weaponInventory[0]
+        })
+      })
+      // Fetch Armor Inventory
+      fetch(api +"/character_armors")
+      .then(r => r.json())
+      .then(character_armors => {
+        var armorIds = []
+        character_armors.forEach((character_armor) => {
+          if (character_armor.character_id === this.state.character.id) {
+            armorIds.push(character_armor.armor_id)
+          }
+        })
+        console.log(armorIds)
+        var armorInventory = this.state.armors.filter(armor => {
+          return armorIds.includes(armor.id)
+        })
+        this.setState({
+          armorInventory: armorInventory,
+          equippedArmor: armorInventory[0]
+        })
+      })
+    })
+
+
+
+
   }
 
   startBattle = () => {
