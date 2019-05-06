@@ -4,12 +4,15 @@ import BattleContainer from './BattleContainer';
 import HudContainer from './HudContainer'
 import Home from '../components/Home'
 import Hud from '../components/Hud';
+import ShopContainer from '../containers/ShopContainer';
 import '../style/game.css'
 
 var api = "http://localhost:3000/"
 class GameContainer extends Component {
   state = {
-    page: "battle",
+    page: "shop",
+    weapons: [],
+    armors: [],
     monsters: [],
     character: {},
     fullCharacterHealth: 0,
@@ -120,6 +123,18 @@ class GameContainer extends Component {
         currentMonsterHealth: this.state.currentMonster.hp
       })
     })
+    // Fetch Armors
+    fetch(api + "/armors")
+    .then(r => r.json())
+    .then(armors => {
+      this.setState({armors: armors})
+    })
+    // Fetch Weapons
+    fetch(api + "/weapons")
+    .then(r => r.json())
+    .then(weapons => {
+      this.setState({weapons: weapons})
+    })
   }
 
   startBattle = () => {
@@ -150,8 +165,13 @@ class GameContainer extends Component {
     } else if (this.state.page === "home") {
       return (
         <div>
-        <Home startBattle={this.startBattle} rest={this.rest}/>
-
+        <Home startBattle={this.startBattle} rest={this.rest} character={this.state.character} showDetails={this.state.showPlayerDetails}/>
+        </div>
+      )
+    } else if (this.state.page === "shop") {
+      return (
+        <div>
+        <ShopContainer armors={this.state.armors} weapons={this.state.weapons}/>
         </div>
       )
     }
@@ -161,10 +181,12 @@ class GameContainer extends Component {
       <div className={`game-container ${this.state.page}`}>
       <>
       <div className="content-container">
+
       {this.displayPage()}
+
       </div>
       <HudContainer monster={this.state.currentMonster} character={this.state.character} currentMonsterHealth={this.state.currentMonsterHealth} characterHealth={this.state.characterHealth}>
-      {this.state.page !== "battle" ? <Hud character={this.state.character} health={this.state.characterHealth} element_class={"player"}/> : <>
+      {this.state.page !== "battle" ? <Hud character={this.state.character} health={this.state.characterHealth} element_class={"player"} showDetails={this.showPlayerDetails} hideDetails={this.hidePlayerDetails}/> : <>
       <Hud character={this.state.character} health={this.state.characterHealth} element_class={"player"}  showDetails={this.showPlayerDetails} hideDetails={this.hidePlayerDetails}/> <Hud character={this.state.currentMonster} health={this.state.currentMonsterHealth} element_class={"enemy"} showDetails={this.showMonsterDetails} hideDetails={this.hideMonsterDetails}/>
       </>}
       </HudContainer>

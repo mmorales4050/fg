@@ -1,11 +1,40 @@
+
+.home-container {
+	display: flex;
+	justify-content: center;
+}
 .button-group {
 	display:flex;
 	flex-direction: column;
 }
 
-.title {
-	height: 300px;
+.details-home {
+	width: 436px;
 }
+
+.place-holder {
+  border: 1px solid transparent;
+  width: 335px;
+  height: 540px;
+  padding: 7px;
+  padding-top: 15px;
+  margin: 50px;
+  margin-top: 20px;
+}
+
+.title {
+	position: absolute;
+	font-size: 100px;
+}
+
+.title-container {
+	height: 300px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
 
 .glass {
 	margin: auto;

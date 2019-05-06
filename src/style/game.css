@@ -10,13 +10,23 @@
 }
 
 .home {
-  background-image: url('../images/home_screen_with_title.png');
+  background-image: url('../images/home_screen.png');
+
+  background-color: #eacfa6;
+  /* background-image: linear-gradient(#eacfa6,#e0b87c); */
+  outline: 0px solid black;
+  outline-offset: -15px;
+
 }
 
 .battle {
   background-image: url('../images/forest_background.png');
 }
 
+.shop {
+  background-color: #eacfa6;
+  background-image: linear-gradient(#eacfa6,#e0b87c);
+}
 .content-container {
   height: 590px;
 }
