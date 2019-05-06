@@ -10,7 +10,6 @@ class ShopItems extends Component {
 
   highlightItem = (e) => {
     this.setState({highlightedItem: e.target.innerText})
-    console.log(this.state.highlightedItem)
   }
 
   removeHighlight = () => {

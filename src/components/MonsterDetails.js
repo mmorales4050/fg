@@ -5,7 +5,7 @@ class MonsterDetails extends Component {
 
   render() {
     return (
-      <div className="details">
+      <div className="details-monster">
       <div className="monster-name">{this.props.monster.name}</div>
         <div className="top-container">
         <div className="group">

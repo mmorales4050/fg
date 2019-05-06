@@ -10,7 +10,7 @@ class Vendor extends Component {
       <div className="shop-buttons">
         <button>Buy Items</button>
         <button>Sell Items</button>
-        <button>Exit</button>
+        <button onClick={this.props.goHome}>Exit</button>
       </div>
       </div>
     );

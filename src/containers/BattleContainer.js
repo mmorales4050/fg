@@ -12,7 +12,6 @@ class BattleContainer extends Component {
     if (this.props.showPlayerDetails) {
       return <CharacterDetails character={this.props.character}/>
     } else {
-      return <div className="place-holder"></div>
     }
   }
 
@@ -20,7 +19,6 @@ class BattleContainer extends Component {
     if (this.props.showMonsterDetails) {
       return <MonsterDetails monster={this.props.monster}/>
     } else {
-      return <div className="place-holder"></div>
     }
   }
   render() {
@@ -30,7 +28,7 @@ class BattleContainer extends Component {
       <Character character={this.props.character}/>
 
       <BattleMenu attack={this.props.attack} goHome={this.props.goHome}/>
-      
+
       {this.monsterDetails()}
       <Monster monster={this.props.monster}/>
 

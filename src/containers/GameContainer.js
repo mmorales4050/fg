@@ -10,7 +10,7 @@ import '../style/game.css'
 var api = "http://localhost:3000/"
 class GameContainer extends Component {
   state = {
-    page: "shop",
+    page: "home",
     weapons: [],
     armors: [],
     monsters: [],
@@ -149,6 +149,12 @@ class GameContainer extends Component {
     })
   }
 
+  goShopping = () => {
+    this.setState({
+      page: "shop"
+    })
+  }
+
   rest = () => {
     this.setState({
       characterHealth: this.state.fullCharacterHealth
@@ -165,13 +171,13 @@ class GameContainer extends Component {
     } else if (this.state.page === "home") {
       return (
         <div>
-        <Home startBattle={this.startBattle} rest={this.rest} character={this.state.character} showDetails={this.state.showPlayerDetails}/>
+        <Home startBattle={this.startBattle} rest={this.rest} character={this.state.character} showDetails={this.state.showPlayerDetails} goShopping={this.goShopping}/>
         </div>
       )
     } else if (this.state.page === "shop") {
       return (
         <div>
-        <ShopContainer armors={this.state.armors} weapons={this.state.weapons}/>
+        <ShopContainer armors={this.state.armors} weapons={this.state.weapons} goHome={this.goHome} character={this.state.character} showDetails={this.state.showPlayerDetails}/>
         </div>
       )
     }

@@ -17,7 +17,7 @@ class ShowItem extends Component {
         <div className="mid-details">
           <div className="mid-details-top">
           <div><div className="bold-shop-text">Price:<span>{this.props.selectedItem.price}</span></div><div className="bold-shop-text">Level: <span>{this.props.selectedItem.item_level}</span></div></div>
-          <div>Element Icon</div>
+          <div><img src={require(`../images/${this.props.selectedItem.item_element.toLowerCase()}.png`)} alt="" width="50" height="50"/></div>
           </div>
           <div className="bold-shop-text">Description</div>
           <div className="desc-text">{this.props.selectedItem.item_desc}</div>

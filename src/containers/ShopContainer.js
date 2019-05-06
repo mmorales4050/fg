@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Vendor from '../components/Vendor';
 import ShopItemContainer from '../containers/ShopItemContainer';
 import ShowItem from '../components/ShowItem';
+import CharacterDetails from '../components/CharacterDetails';
 import '../style/shop.css'
 
 class ShopContainer extends Component {
@@ -16,7 +17,8 @@ class ShopContainer extends Component {
   render() {
     return (
       <div className="shop-container">
-      <Vendor />
+      {this.props.showDetails ? <CharacterDetails character={this.props.character}/> : null}
+      <Vendor goHome={this.props.goHome}/>
       <ShopItemContainer armors={this.props.armors} weapons={this.props.weapons} selectItem={this.selectItem}/>
       <ShowItem selectedItem={this.state.selectedItem}/>
       </div>

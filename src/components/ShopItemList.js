@@ -12,7 +12,7 @@ class ShopItemList extends Component {
 
   displayItems = () => {
     return this.props.items.map(item => {
-      return <li onClick={(e) => this.props.highlightItem(e)} className={`shop-item-list ${this.props.highlightedItem === item.name ? "highlight" : null}`}><div className="shop-list-item" onClick={()=>this.props.selectItem(item)}>{item.name}</div></li>
+      return <li onClick={(e) => this.props.highlightItem(e)} className={`shop-item-list ${this.props.highlightedItem === item.name ? "highlight" : null}`}><div className="shop-list-item" onClick={()=>this.props.selectItem(item)}><img src={require(`../images/${item.item_element.toLowerCase()}.png`)} alt="" width="15" height="15"/>{item.name}</div></li>
     })
   }
 

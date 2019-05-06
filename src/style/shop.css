@@ -9,7 +9,9 @@
   align-self: flex-end;
 }
 
-button {
+
+
+.vendor button {
   background-color: #ffffc6;
   border: solid black 1px;
   border-radius: 20px;
@@ -80,6 +82,16 @@ button {
   color: black;
   font-weight: normal;
   padding-left: 15px;
+}
+
+.shop-item-list img {
+  padding-right: 10px;
+}
+
+.mid-details img {
+  object-fit: cover;
+  padding: 10px;
+  padding-right: 20px;
 }
 
 .desc-text {
