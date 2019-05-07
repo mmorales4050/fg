@@ -51,16 +51,16 @@ class CharacterStats extends Component {
       <li>Light</li>
       <li>Darkness</li>
       </ul>
-      <ul className="defense-mod">
-      <li><span>{this.props.character.armor_fire + 100}</span> <span className="percent">%</span></li>
-      <li><span>{this.props.character.armor_water + 100}</span> <span className="percent">%</span></li>
-      <li><span>{this.props.character.armor_wind + 100}</span> <span className="percent">%</span></li>
-      <li><span>{this.props.character.armor_ice + 100}</span> <span className="percent">%</span></li>
-      <li><span>{this.props.character.armor_earth + 100}</span> <span className="percent">%</span></li>
-      <li><span>{this.props.character.armor_energy + 100}</span> <span className="percent">%</span></li>
-      <li><span>{this.props.character.armor_light + 100}</span> <span className="percent">%</span></li>
-      <li><span>{this.props.character.armor_darkness + 100}</span> <span className="percent">%</span></li>
-      </ul>
+        <ul className="defense-mod">
+        <li><span>{this.props.character.armor_fire + 100}</span> <span className="percent">%</span></li>
+        <li><span>{this.props.character.armor_water + 100}</span> <span className="percent">%</span></li>
+        <li><span>{this.props.character.armor_wind + 100}</span> <span className="percent">%</span></li>
+        <li><span>{this.props.character.armor_ice + 100}</span> <span className="percent">%</span></li>
+        <li><span>{this.props.character.armor_earth + 100}</span> <span className="percent">%</span></li>
+        <li><span>{this.props.character.armor_energy + 100}</span> <span className="percent">%</span></li>
+        <li><span>{this.props.character.armor_light + 100}</span> <span className="percent">%</span></li>
+        <li><span>{this.props.character.armor_darkness + 100}</span> <span className="percent">%</span></li>
+        </ul>
       </div>
       </div>
       </>

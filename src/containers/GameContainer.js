@@ -24,32 +24,35 @@ class GameContainer extends Component {
     equippedWeapon: {},
     equippedArmor: {},
     showMonsterDetails: false,
-    showPlayerDetails: false
+    showPlayerDetails: false,
+    winGame: false,
+    loseGame: false,
+    loading: []
     }
 
-    showMonsterDetails = () => {
-      this.setState({
-        showMonsterDetails: true
-      })
-    }
+  showMonsterDetails = () => {
+    this.setState({
+      showMonsterDetails: true
+    })
+  }
 
-    hideMonsterDetails = () => {
-      this.setState({
-        showMonsterDetails: false
-      })
-    }
+  hideMonsterDetails = () => {
+    this.setState({
+      showMonsterDetails: false
+    })
+  }
 
-    showPlayerDetails = () => {
-      this.setState({
-        showPlayerDetails: true
-      })
-    }
+  showPlayerDetails = () => {
+    this.setState({
+      showPlayerDetails: true
+    })
+  }
 
-    hidePlayerDetails = () => {
-      this.setState({
-        showPlayerDetails: false
-      })
-    }
+  hidePlayerDetails = () => {
+    this.setState({
+      showPlayerDetails: false
+    })
+  }
 
   player_damage_formula = () => {
 
@@ -59,10 +62,23 @@ class GameContainer extends Component {
 
   }
 
+  // Each Attack does:
+  // level * 3 + 100 %
+  // basedamage
+  // random
+  // level * 7.5 + 100 %
+  // stats
+  // base bth:
+  // level / 10
+  //
+  // stats damage :
+  // str/8
   attack = () => {
-    var characterDamage = this.state.equippedWeapon.base_damage
+    var characterDamage = this.state.equippedWeapon.base_damage + (Math.floor(Math.random() * this.state.equippedWeapon.random_damage) + 1)
 
-    var monsterDamage = this.state.currentMonster.base_damage
+    characterDamage = characterDamage * ((this.state.character.level * 3 + 100)/100)
+
+    var monsterDamage = this.state.currentMonster.base_damage + (Math.floor(Math.random() * this.state.currentMonster.random_damage) + 1)
 
     var updatedMonsterHealth = this.state.currentMonsterHealth - characterDamage
 
@@ -92,11 +108,53 @@ class GameContainer extends Component {
   }
 
   winGame = () => {
-
+    this.setState({
+      winGame: true
+    })
+    fetch((api + `/characters/${this.state.character.id}`), {
+      method: "PATCH",
+      body: JSON.stringify({exp: this.state.character.exp + this.state.currentMonster.exp, gold: this.state.character.gold + this.state.currentMonster.gold})
+    }).then(() => {
+      this.setState({
+        character: {
+          ...this.state.character,
+          gold: this.state.character.gold + this.state.currentMonster.gold,
+          exp: this.state.character.exp + this.state.currentMonster.exp
+        }
+      })
+    })
+    .then(() => {
+      if (this.state.character.exp > this.state.character.exp_needed) {
+        fetch((api + `/characters/${this.state.character.id}`), {
+          method: "PATCH",
+          body: JSON.stringify({exp: this.state.character.exp - this.state.character.exp_needed, exp_needed: (this.state.character.exp_needed * (this.state.character.level - 1) * 1.1), level: this.state.character.level + 1 })
+        })
+        .then(() => {
+          this.setState({
+            character: {
+              ...this.state.character,
+              exp: this.state.character.exp - this.state.character.exp_needed,
+              exp_needed: (this.state.character.exp_needed * (this.state.character.level - 1) * 1.1),
+              level: this.state.character.level + 1
+            }
+          })
+        })
+      }
+    })
   }
 
   loseGame = () => {
+    this.setState({
+      loseGame: true
+    })
+  }
 
+  continueGame = () => {
+    this.setState({
+      page: "home",
+      loseGame: false,
+      winGame: false
+    })
   }
 
   componentDidMount() {
@@ -116,24 +174,6 @@ class GameContainer extends Component {
       .then(r => r.json())
       .then(monsters => {
         this.setState({monsters: monsters})
-      })
-      .then(() => {
-        this.setState({
-          currentMonster: this.state.monsters[Math.floor(Math.random() * 63)]
-        })
-        this.setState({
-          currentMonsterHealth: this.state.currentMonster.hp
-        })
-      })
-      .then(() => {
-        while (this.state.currentMonster.level < this.state.character.level - 5 || this.state.currentMonster.level > this.state.character.level + 5) {
-          this.setState({
-            currentMonster: this.state.monsters[Math.floor(Math.random() * 63)]
-          })
-          this.setState({
-            currentMonsterHealth: this.state.currentMonster.hp
-          })
-        }
       })
     })
     // Fetch Weapons
@@ -161,7 +201,7 @@ class GameContainer extends Component {
             weaponIds.push(character_weapon.weapon_id)
           }
         })
-        console.log(weaponIds)
+
         var weaponInventory = this.state.weapons.filter(weapon => {
           return weaponIds.includes(weapon.id)
         })
@@ -181,7 +221,7 @@ class GameContainer extends Component {
             armorIds.push(character_armor.armor_id)
           }
         })
-        console.log(armorIds)
+
         var armorInventory = this.state.armors.filter(armor => {
           return armorIds.includes(armor.id)
         })
@@ -191,13 +231,21 @@ class GameContainer extends Component {
         })
       })
     })
-
-
-
-
   }
 
   startBattle = () => {
+    var monstersToFight = this.state.monsters.filter(monster => {
+      if (monster.level >= this.state.character.level - 5 && monster.level <= this.state.character.level + 5) {
+        return true
+      } else {
+        return false
+      }
+    })
+    var newMonster = monstersToFight[Math.floor(Math.random() * monstersToFight.length)]
+    this.setState({
+      currentMonster: newMonster,
+      currentMonsterHealth: newMonster.hp,
+    })
     this.setState({
       page: "battle"
     })
@@ -224,20 +272,20 @@ class GameContainer extends Component {
     if (this.state.page === "battle") {
       return (
         <div className="battle-container">
-          <BattleContainer monster={this.state.currentMonster} character={this.state.character} attack={this.attack} goHome={this.goHome} showMonsterDetails={this.state.showMonsterDetails} showPlayerDetails={this.state.showPlayerDetails}/>
+          <BattleContainer monster={this.state.currentMonster} character={this.state.character} equippedArmor={this.state.equippedArmor} attack={this.attack} goHome={this.goHome} showMonsterDetails={this.state.showMonsterDetails} showPlayerDetails={this.state.showPlayerDetails} winGame={this.state.winGame} loseGame={this.state.loseGame} continueGame={this.continueGame}/>
 
         </div>
       );
     } else if (this.state.page === "home") {
       return (
         <div>
-        <Home startBattle={this.startBattle} rest={this.rest} character={this.state.character} showDetails={this.state.showPlayerDetails} goShopping={this.goShopping}/>
+        <Home startBattle={this.startBattle} rest={this.rest} character={this.state.character} showDetails={this.state.showPlayerDetails} goShopping={this.goShopping} equippedArmor={this.state.equippedArmor}/>
         </div>
       )
     } else if (this.state.page === "shop") {
       return (
         <div>
-        <ShopContainer armors={this.state.armors} weapons={this.state.weapons} goHome={this.goHome} character={this.state.character} showDetails={this.state.showPlayerDetails}/>
+        <ShopContainer armors={this.state.armors} weapons={this.state.weapons} goHome={this.goHome} character={this.state.character} equippedArmor={this.state.equippedArmor} showDetails={this.state.showPlayerDetails}/>
         </div>
       )
     }

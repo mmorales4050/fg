@@ -9,7 +9,7 @@ class Home extends Component {
 
       <div className="home-container">
 
-      {this.props.showDetails ? <CharacterDetails character={this.props.character}/> : null}
+      {this.props.showDetails ? <CharacterDetails character={this.props.character} equippedArmor={this.props.equippedArmor}/> : null}
       <div>
       <div className="title-container">
       <div className="title">
@@ -25,7 +25,7 @@ class Home extends Component {
       </div>
       </div>
 
-    
+
       </div>
     );
   }

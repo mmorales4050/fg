@@ -13,3 +13,33 @@
   margin: 50px;
   margin-top: 20px;
 }
+
+.victory-message {
+  padding-top: 100px;
+  text-align: center;
+  font-family: Trattatello, fantasy;
+  color: #1f6ed0;
+  font-size: 150px;
+  text-shadow: 2px 2px black;
+
+}
+
+
+.victory-message-container button {
+  display:block;
+  margin: auto;
+  border: 1px solid black;
+  background-color: white;
+  font-size: 20px;
+  margin-top: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-radius: 25px;
+  font-weight: bold;
+}
+
+.reward {
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+}
