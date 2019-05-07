@@ -7,7 +7,7 @@ import Hud from '../components/Hud';
 import ShopContainer from '../containers/ShopContainer';
 import '../style/game.css'
 
-var api = "http://localhost:3000/"
+var api = "http://localhost:3000"
 class GameContainer extends Component {
   state = {
     page: "home",
@@ -62,6 +62,24 @@ class GameContainer extends Component {
 
   }
 
+  animateMonster = () => {
+      
+  }
+
+  monsterTurn = (updatedCharacterHealth, monsterDamage) => {
+    this.animateMonster()
+    if (updatedCharacterHealth > 0) {
+      this.setState({
+        characterHealth: updatedCharacterHealth
+      })
+    }
+    else {
+      this.setState({
+        characterHealth: 0
+      })
+      this.loseGame()
+    }
+  }
   // Each Attack does:
   // level * 3 + 100 %
   // basedamage
@@ -76,17 +94,32 @@ class GameContainer extends Component {
   attack = () => {
     var characterDamage = this.state.equippedWeapon.base_damage + (Math.floor(Math.random() * this.state.equippedWeapon.random_damage) + 1)
 
+    //calculate damage based on level
     characterDamage = characterDamage * ((this.state.character.level * 3 + 100)/100)
+    // Calculate damage based on element
+    characterDamage = characterDamage * ((100 - this.state.currentMonster[`armor_${this.state.equippedWeapon.item_element.toLowerCase()}`])/100)
+
+    characterDamage = Math.round(characterDamage)
 
     var monsterDamage = this.state.currentMonster.base_damage + (Math.floor(Math.random() * this.state.currentMonster.random_damage) + 1)
+
+    //calculate damage based on level
+    monsterDamage = monsterDamage * ((this.state.currentMonster.level * 3 + 100)/100)
+
+    // Calculate damage based on element
+    monsterDamage = monsterDamage * ((100 - this.state.equippedArmor[`armor_${this.state.currentMonster.weapon_element.toLowerCase()}`])/100)
+    monsterDamage = Math.round(monsterDamage)
 
     var updatedMonsterHealth = this.state.currentMonsterHealth - characterDamage
 
     var updatedCharacterHealth = this.state.characterHealth - monsterDamage
+
     if (updatedMonsterHealth > 0) {
+
       this.setState({
         currentMonsterHealth: updatedMonsterHealth
-      })
+      }, ()=>this.monsterTurn(updatedCharacterHealth, monsterDamage))
+
     }
     else {
       this.setState({
@@ -94,17 +127,7 @@ class GameContainer extends Component {
       })
       this.winGame()
     }
-    if (updatedCharacterHealth > 0) {
-      this.setState({
-        characterHealth: updatedCharacterHealth
-      })
-    }
-    else {
-      this.setState({
-        characterHealth: 0
-      })
-      this.loseGame()
-    }
+
   }
 
   winGame = () => {
@@ -113,7 +136,8 @@ class GameContainer extends Component {
     })
     fetch((api + `/characters/${this.state.character.id}`), {
       method: "PATCH",
-      body: JSON.stringify({exp: this.state.character.exp + this.state.currentMonster.exp, gold: this.state.character.gold + this.state.currentMonster.gold})
+      body: JSON.stringify({character: {exp: this.state.character.exp + this.state.currentMonster.exp, gold: this.state.character.gold + this.state.currentMonster.gold}}),
+      headers: {"Content-Type":"application/json"}
     }).then(() => {
       this.setState({
         character: {
@@ -127,7 +151,8 @@ class GameContainer extends Component {
       if (this.state.character.exp > this.state.character.exp_needed) {
         fetch((api + `/characters/${this.state.character.id}`), {
           method: "PATCH",
-          body: JSON.stringify({exp: this.state.character.exp - this.state.character.exp_needed, exp_needed: (this.state.character.exp_needed * (this.state.character.level - 1) * 1.1), level: this.state.character.level + 1 })
+          body: JSON.stringify({character: {exp: this.state.character.exp - this.state.character.exp_needed, exp_needed: (this.state.character.exp_needed * (this.state.character.level - 1) * 1.1), level: this.state.character.level + 1 }}),
+          headers: {"Content-Type":"application/json"}
         })
         .then(() => {
           this.setState({
@@ -211,6 +236,9 @@ class GameContainer extends Component {
           equippedWeapon: weaponInventory[0]
         })
       })
+
+    })
+    .then(() => {
       // Fetch Armor Inventory
       fetch(api +"/character_armors")
       .then(r => r.json())
@@ -221,7 +249,6 @@ class GameContainer extends Component {
             armorIds.push(character_armor.armor_id)
           }
         })
-
         var armorInventory = this.state.armors.filter(armor => {
           return armorIds.includes(armor.id)
         })

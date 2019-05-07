@@ -13,7 +13,7 @@ class Home extends Component {
       <div>
       <div className="title-container">
       <div className="title">
-        Game Title
+      Fantasy Game
       </div>
       </div>
       <div className="button-group">

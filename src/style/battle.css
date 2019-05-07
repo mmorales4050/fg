@@ -1,8 +1,12 @@
 .battle-container {
   display: flex;
-  justify-content: center;
+  
   height: 100%;
+  width: 100%;
+  align-items: flex-end;
 }
+
+
 
 .place-holder {
   border: 1px solid transparent;

@@ -23,6 +23,7 @@ class Hud extends Component {
 
         <div className={`character-icon-name ${this.props.element_class}`}>
         {this.props.character.name}
+
           <div className="health">{this.props.health}</div>
           <div className="mana">100</div>
 
