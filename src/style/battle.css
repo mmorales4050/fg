@@ -1,6 +1,6 @@
 .battle-container {
   display: flex;
-  
+
   height: 100%;
   width: 100%;
   align-items: flex-end;
@@ -25,6 +25,7 @@
   color: #1f6ed0;
   font-size: 150px;
   text-shadow: 2px 2px black;
+  
 
 }
 

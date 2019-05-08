@@ -14,6 +14,7 @@ class ShowItem extends Component {
   showMidDetails = () => {
     if (this.props.selectedItem.name) {
       return (
+        <>
         <div className="mid-details">
           <div className="mid-details-top">
           <div><div className="bold-shop-text">Price:<span>{this.props.selectedItem.price}</span></div><div className="bold-shop-text">Level: <span>{this.props.selectedItem.item_level}</span></div></div>
@@ -22,6 +23,8 @@ class ShowItem extends Component {
           <div className="bold-shop-text">Description</div>
           <div className="desc-text">{this.props.selectedItem.item_desc}</div>
         </div>
+
+        </>
       )
     }
   }
@@ -29,9 +32,15 @@ class ShowItem extends Component {
   showBottomDetails = () => {
     if (this.props.selectedItem.name) {
       return (
+        <>
         <div className="bottom-details">
         <button>Buy</button>
+
         </div>
+
+        <img className="weapon-icon" src={require("../images/shop_sword.png")} alt=""/>
+
+        </>
       )
     }
   }

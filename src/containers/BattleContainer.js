@@ -41,19 +41,19 @@ class BattleContainer extends Component {
       )
     }
     else {
-      return <BattleMenu attack={this.props.attack} goHome={this.props.goHome}/>
+      return <BattleMenu attack={this.props.attack} goHome={this.props.goHome} attackPhase={this.props.attackPhase}/>
     }
   }
   render() {
     return (
       <div className="battle-container">
       {this.playerDetails()}
-      <Character character={this.props.character} equippedArmor={this.props.equippedArmor}/>
+      <Character character={this.props.character} equippedArmor={this.props.equippedArmor} characterTurn={this.props.characterTurn}/>
       {
         this.showGame()
       }
       {this.monsterDetails()}
-      <Monster monster={this.props.monster}/>
+      <Monster monster={this.props.monster} monsterTurn={this.props.monsterTurn}/>
 
       </div>
     );

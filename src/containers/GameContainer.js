@@ -27,7 +27,10 @@ class GameContainer extends Component {
     showPlayerDetails: false,
     winGame: false,
     loseGame: false,
-    loading: []
+    loading: [],
+    monsterTurn: false,
+    characterTurn: false,
+    attackPhase: false
     }
 
   showMonsterDetails = () => {
@@ -62,15 +65,18 @@ class GameContainer extends Component {
 
   }
 
-  animateMonster = () => {
-      
-  }
-
   monsterTurn = (updatedCharacterHealth, monsterDamage) => {
-    this.animateMonster()
     if (updatedCharacterHealth > 0) {
       this.setState({
-        characterHealth: updatedCharacterHealth
+        monsterTurn: true
+      }, ()=> {setTimeout(() => {
+        this.setState({
+          monsterTurn: false,
+          attackPhase: false,
+          characterHealth: updatedCharacterHealth
+        })
+      }, 1000)
+
       })
     }
     else {
@@ -79,6 +85,7 @@ class GameContainer extends Component {
       })
       this.loseGame()
     }
+
   }
   // Each Attack does:
   // level * 3 + 100 %
@@ -92,41 +99,56 @@ class GameContainer extends Component {
   // stats damage :
   // str/8
   attack = () => {
-    var characterDamage = this.state.equippedWeapon.base_damage + (Math.floor(Math.random() * this.state.equippedWeapon.random_damage) + 1)
+    this.setState({
+      attackPhase: true
+    }, () => {
+      console.log("battle " + this.state.attackPhase)
+      var characterDamage = this.state.equippedWeapon.base_damage + (Math.floor(Math.random() * this.state.equippedWeapon.random_damage) + 1)
 
-    //calculate damage based on level
-    characterDamage = characterDamage * ((this.state.character.level * 3 + 100)/100)
-    // Calculate damage based on element
-    characterDamage = characterDamage * ((100 - this.state.currentMonster[`armor_${this.state.equippedWeapon.item_element.toLowerCase()}`])/100)
+      //calculate damage based on level
+      characterDamage = characterDamage * ((this.state.character.level * 3 + 100)/100)
+      // Calculate damage based on element
+      characterDamage = characterDamage * ((100 - this.state.currentMonster[`armor_${this.state.equippedWeapon.item_element.toLowerCase()}`])/100)
 
-    characterDamage = Math.round(characterDamage)
+      characterDamage = Math.round(characterDamage)
 
-    var monsterDamage = this.state.currentMonster.base_damage + (Math.floor(Math.random() * this.state.currentMonster.random_damage) + 1)
+      var monsterDamage = this.state.currentMonster.base_damage + (Math.floor(Math.random() * this.state.currentMonster.random_damage) + 1)
 
-    //calculate damage based on level
-    monsterDamage = monsterDamage * ((this.state.currentMonster.level * 3 + 100)/100)
+      //calculate damage based on level
+      monsterDamage = monsterDamage * ((this.state.currentMonster.level * 3 + 100)/100)
 
-    // Calculate damage based on element
-    monsterDamage = monsterDamage * ((100 - this.state.equippedArmor[`armor_${this.state.currentMonster.weapon_element.toLowerCase()}`])/100)
-    monsterDamage = Math.round(monsterDamage)
+      // Calculate damage based on element
+      monsterDamage = monsterDamage * ((100 - this.state.equippedArmor[`armor_${this.state.currentMonster.weapon_element.toLowerCase()}`])/100)
+      monsterDamage = Math.round(monsterDamage)
 
-    var updatedMonsterHealth = this.state.currentMonsterHealth - characterDamage
+      var updatedMonsterHealth = this.state.currentMonsterHealth - characterDamage
 
-    var updatedCharacterHealth = this.state.characterHealth - monsterDamage
+      var updatedCharacterHealth = this.state.characterHealth - monsterDamage
 
-    if (updatedMonsterHealth > 0) {
-
-      this.setState({
-        currentMonsterHealth: updatedMonsterHealth
-      }, ()=>this.monsterTurn(updatedCharacterHealth, monsterDamage))
-
-    }
-    else {
-      this.setState({
-        currentMonsterHealth: 0
+      if (updatedMonsterHealth > 0) {
+        this.setState({
+          characterTurn: true
+        }, ()=> {setTimeout(() => {
+          this.setState({
+            characterTurn: false,
+            currentMonsterHealth: updatedMonsterHealth
+          }, ()=>this.monsterTurn(updatedCharacterHealth, monsterDamage))
+        }, 1000)
       })
-      this.winGame()
-    }
+      }
+      else {
+        this.setState({
+          characterTurn: true
+        }, ()=> {setTimeout(() => {
+          this.setState({
+            characterTurn: false,
+            currentMonsterHealth: 0
+          }, ()=>this.winGame())
+        }, 1000)
+      })
+      }
+    })
+
 
   }
 
@@ -178,7 +200,8 @@ class GameContainer extends Component {
     this.setState({
       page: "home",
       loseGame: false,
-      winGame: false
+      winGame: false,
+      attackPhase: false
     })
   }
 
@@ -299,7 +322,7 @@ class GameContainer extends Component {
     if (this.state.page === "battle") {
       return (
         <div className="battle-container">
-          <BattleContainer monster={this.state.currentMonster} character={this.state.character} equippedArmor={this.state.equippedArmor} attack={this.attack} goHome={this.goHome} showMonsterDetails={this.state.showMonsterDetails} showPlayerDetails={this.state.showPlayerDetails} winGame={this.state.winGame} loseGame={this.state.loseGame} continueGame={this.continueGame}/>
+          <BattleContainer monster={this.state.currentMonster} character={this.state.character} equippedArmor={this.state.equippedArmor} attack={this.attack} goHome={this.goHome} showMonsterDetails={this.state.showMonsterDetails} showPlayerDetails={this.state.showPlayerDetails} winGame={this.state.winGame} loseGame={this.state.loseGame} continueGame={this.continueGame} characterTurn={this.state.characterTurn} monsterTurn={this.state.monsterTurn} attackPhase={this.state.attackPhase}/>
 
         </div>
       );
