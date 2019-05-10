@@ -1,5 +1,5 @@
 .character-container {
-  
+
 }
 
 .character {
@@ -8,13 +8,12 @@
   border: 1px  black;
   position: relative;
   left: 100px;
-  background-image: url("../images/body.png");
+  background-image: url("../images/character_standing_attack.png");
   background-size: cover;
   padding-bottom:  100px;
-  transform: rotateY(180deg) rotate(-0deg);
 }
 
-.character div.weapon {
+/* .character div.weapon {
   background-image: url("../images/weapon.png");
 
   background-repeat: no-repeat;
@@ -52,7 +51,7 @@
   height: 100%;
   position: relative;
   z-index: 80;
-}
+} */
 
 .character.animate {
   animation-duration: .5s;

@@ -6,6 +6,7 @@ class Monster extends Component {
     console.log(this.props.monsterTurn)
     return (
       <div className={`monster ${this.props.monsterTurn ? "animate" : null}`}>
+
       </div>
     );
   }

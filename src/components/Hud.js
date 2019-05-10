@@ -12,13 +12,13 @@ class Hud extends Component {
           <div className="mana">{this.props.character.mp}</div>
         </div>
         <div onMouseEnter={this.props.showDetails} onMouseLeave={this.props.hideDetails} className={`circle ${this.props.element_class}`}>
-          <img src={this.props.character.extra_data} height="140" alt="" />
+          <img src={""} height="140" alt="" />
         </div>
         </>
       :
         <>
         <div onMouseEnter={this.props.showDetails} onMouseLeave={this.props.hideDetails} className={`circle ${this.props.element_class}`}>
-          <img src={require("../images/player_icon.png")} width="120"alt="" />
+          <img src={""} width="120"alt="" />
         </div>
 
         <div className={`character-icon-name ${this.props.element_class}`}>

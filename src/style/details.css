@@ -12,6 +12,16 @@
   z-index: 100;
 }
 
+.battle-container div.details {
+  bottom: 320px;
+  left: 350px;
+}
+
+.battle-container div.details-monster {
+  bottom: 320px;
+  left: 350px;
+}
+
 .details-monster {
   border: 1px solid black;
   background-color: white;

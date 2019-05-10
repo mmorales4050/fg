@@ -7,7 +7,11 @@
 }
 
 
-
+.victory-message-container {
+  
+  left: 300px;
+  bottom: 500px;
+}
 .place-holder {
   border: 1px solid transparent;
   width: 335px;
@@ -25,7 +29,7 @@
   color: #1f6ed0;
   font-size: 150px;
   text-shadow: 2px 2px black;
-  
+
 
 }
 

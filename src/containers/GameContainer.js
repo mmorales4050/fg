@@ -170,7 +170,9 @@ class GameContainer extends Component {
       })
     })
     .then(() => {
-      if (this.state.character.exp > this.state.character.exp_needed) {
+      console.log("checking for level up")
+      if (this.state.character.exp >=  this.state.character.exp_needed) {
+        console.log("sending fetch")
         fetch((api + `/characters/${this.state.character.id}`), {
           method: "PATCH",
           body: JSON.stringify({character: {exp: this.state.character.exp - this.state.character.exp_needed, exp_needed: (this.state.character.exp_needed * (this.state.character.level - 1) * 1.1), level: this.state.character.level + 1 }}),
